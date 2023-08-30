@@ -5,9 +5,14 @@ import '../../themes/app_colors.dart';
 import '../../themes/app_text_styles.dart';
 import '../../utils/assets.dart';
 
-class DetectMyPosturePage extends StatelessWidget {
-  DetectMyPosturePage({super.key});
+class DetectMyPosturePage extends StatefulWidget {
+  const DetectMyPosturePage({super.key});
 
+  @override
+  State<DetectMyPosturePage> createState() => _DetectMyPosturePageState();
+}
+
+class _DetectMyPosturePageState extends State<DetectMyPosturePage> {
   final _scrollController = ScrollController();
 
   @override
