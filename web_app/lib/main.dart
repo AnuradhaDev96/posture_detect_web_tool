@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'screens/detect_my_posture/detect_my_posture_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const PostureDetectingWebApp());
 }
 
