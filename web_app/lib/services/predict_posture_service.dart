@@ -36,7 +36,7 @@ class PredictPostureService {
     try {
       if (kDebugMode) print("Started fetching at: ${DateTime.now()}");
 
-      var response = await http.get(endpoint, headers: _commonHeaders);
+      var response = await http.get(endpoint);
       logEndpoint(endpoint, response.statusCode);
 
       if (kDebugMode) print("Received results at: ${DateTime.now()}");
