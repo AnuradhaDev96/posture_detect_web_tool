@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 
 import 'firebase_options.dart';
-import 'screens/detect_my_posture/detect_my_posture_page.dart';
 import 'screens/home/home_page.dart';
 import 'themes/app_colors.dart';
 
@@ -27,8 +26,7 @@ class PostureDetectingWebApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: AppColors.indigo2,
       ),
-      // home: DetectMyPosturePage(),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }

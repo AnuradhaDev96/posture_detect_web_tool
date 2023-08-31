@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../themes/app_colors.dart';
 import '../../utils/assets.dart';
+import '../detect_my_posture/detect_my_posture_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -63,7 +64,118 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
+          SliverToBoxAdapter(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DetectMyPosturePage(),
+                  ),
+                ),
+                child: Container(
+                  width: MediaQuery.sizeOf(context).width * 0.5,
+                  // height: 210,
+                  decoration: BoxDecoration(
+                    color: AppColors.indigo1,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 35),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.sizeOf(context).width * 0.3,
+                            child: const Text(
+                              'DETECT MY POSTURE',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.sizeOf(context).width * 0.32,
+                            child: const Text(
+                              'Camera will be used to detect your sitting postures',
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SvgPicture.asset(
+                        Assets.rightArrowFilled,
+                        width: 70,
+                        height: 70,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  width: MediaQuery.sizeOf(context).width * 0.5,
+                  // height: 210,
+                  decoration: BoxDecoration(
+                    color: AppColors.indigo1,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  margin: const EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.sizeOf(context).width * 0.3,
+                            child: const Text(
+                              'POSTURE GUIDE',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SvgPicture.asset(
+                        Assets.rightArrowFilled,
+                        width: 70,
+                        height: 70,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

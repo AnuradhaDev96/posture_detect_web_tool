@@ -29,8 +29,7 @@ class _DetectMyPosturePageState extends State<DetectMyPosturePage> {
 
   Future<void> getCameraAccess() async {
     try {
-      await window.navigator.mediaDevices!
-          .getUserMedia({'video': true, 'audio': false});
+      await window.navigator.mediaDevices!.getUserMedia({'video': true, 'audio': false});
       setState(() {
         cameraAccess = true;
       });
@@ -56,7 +55,9 @@ class _DetectMyPosturePageState extends State<DetectMyPosturePage> {
         backgroundColor: Colors.transparent,
         leading: Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
-          child: SvgPicture.asset(Assets.leftArrowIcon, width: 25, height: 35),
+          child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: SvgPicture.asset(Assets.leftArrowIcon, width: 25, height: 35)),
         ),
         leadingWidth: 80,
         title: const Align(
@@ -75,21 +76,19 @@ class _DetectMyPosturePageState extends State<DetectMyPosturePage> {
           ),
         ],
       ),
-      body: Builder(
-        builder: (context) {
-          if (error != null) {
-            return CameraErrorWidget(message: '$error');
-          }
-          if (!cameraAccess) {
-            return const CameraErrorWidget(message: 'Camera access not granted yet.');
-          }
-          if (cameras == null) {
-            return const CameraErrorWidget(message: 'Reading cameras');
-          }
-
-          return PostureDetectionView(cameras: cameras!);
+      body: Builder(builder: (context) {
+        if (error != null) {
+          return CameraErrorWidget(message: '$error');
         }
-      ),
+        if (!cameraAccess) {
+          return const CameraErrorWidget(message: 'Camera access not granted yet.');
+        }
+        if (cameras == null) {
+          return const CameraErrorWidget(message: 'Reading cameras');
+        }
+
+        return PostureDetectionView(cameras: cameras!);
+      }),
     );
   }
 }
