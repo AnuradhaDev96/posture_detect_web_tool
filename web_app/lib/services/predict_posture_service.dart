@@ -8,7 +8,7 @@ import '../models/enums/prediction_result.dart';
 
 class PredictPostureService {
   //TODO: change base url based on firestore
-  String baseUrl = 'https://015b-35-230-162-0.ngrok.io/';
+  String baseUrl = 'https://0e1c-34-75-250-81.ngrok.io/';
 
   final Map<String, String> _commonHeaders = {
     'Accept': '*/*',

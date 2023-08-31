@@ -14,6 +14,8 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
 
   /// This function should be used initially
   Future<void> fetchPredictionResults() async {
+    print("Initial call at ${DateTime.now()}");
+    _getPredictionResults();
     _fetchResultsTimer = _defaultTimer;
   }
 
@@ -26,22 +28,34 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
   /// Resume fetching results
   Future<void> resumeFetchingPredictionResults() async {
     emit(RecordingVideo());
+    _getPredictionResults();
     _fetchResultsTimer = _defaultTimer;
   }
 
   Timer get _defaultTimer => Timer.periodic(
         const Duration(seconds: 28),
-        (timer) async {
-          await _postureService.getPredictionResults().then((result) {
-            switch (result) {
-              case PredictionResult.goodPosture:
-                emit(ReceivedGoodPostureResult());
-              case PredictionResult.badPosture:
-                emit(ReceivedBadPostureResult());
-              case PredictionResult.serverError:
-                emit(ServerErrorResult());
-            }
-          });
+        (timer) {
+          _getPredictionResults();
         },
       );
+
+  /// call API function to get results
+  Future<void> _getPredictionResults() async {
+    await _postureService.getPredictionResults().then(
+      (result) {
+        if (state is! BreakTakenState) {
+          switch (result) {
+            case PredictionResult.goodPosture:
+              emit(ReceivedGoodPostureResult());
+            case PredictionResult.badPosture:
+              emit(ReceivedBadPostureResult());
+            case PredictionResult.serverError:
+              emit(ServerErrorResult());
+          }
+        } else {
+          emit(BreakTakenState());
+        }
+      },
+    );
+  }
 }

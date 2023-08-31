@@ -33,6 +33,7 @@ class _InitializedCustomScrollViewState extends State<InitializedCustomScrollVie
       widget.cameraController.pausePreview();
       _isPreviewPaused = true;
     });
+    _predictionController.takeBreak();
   }
 
   void _resumeCamera() async {
@@ -40,6 +41,7 @@ class _InitializedCustomScrollViewState extends State<InitializedCustomScrollVie
       widget.cameraController.resumePreview();
       _isPreviewPaused = false;
     });
+    _predictionController.resumeFetchingPredictionResults();
   }
 
   @override
