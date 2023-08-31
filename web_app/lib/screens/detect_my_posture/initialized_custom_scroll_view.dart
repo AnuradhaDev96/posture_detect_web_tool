@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../themes/app_colors.dart';
 
 class InitializedCustomScrollView extends StatefulWidget {
-  InitializedCustomScrollView({super.key, required this.cameraController});
+  const InitializedCustomScrollView({super.key, required this.cameraController});
 
   final CameraController cameraController;
 
