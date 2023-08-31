@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -28,7 +29,9 @@ class PredictPostureService {
 
   Future<PredictionResult> getPredictionResults() async {
     await _configureBaseUrl();
-    Uri endpoint = Uri.parse('$_baseUrl/predictPosture/true');
+    final valueParams = ['true', 'false'];
+
+    Uri endpoint = Uri.parse('$_baseUrl/predictPosture/${valueParams[Random().nextInt(valueParams.length)]}');
 
     try {
       if (kDebugMode) print("Started fetching at: ${DateTime.now()}");

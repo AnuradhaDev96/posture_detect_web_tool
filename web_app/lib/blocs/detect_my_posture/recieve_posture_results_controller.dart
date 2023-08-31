@@ -33,7 +33,7 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
   }
 
   Timer get _defaultTimer => Timer.periodic(
-        const Duration(seconds: 28),
+        const Duration(seconds: 20),
         (timer) {
           _getPredictionResults();
         },
