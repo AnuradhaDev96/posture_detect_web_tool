@@ -1,28 +1,42 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/enums/prediction_result.dart';
 
 class PredictPostureService {
+  final _firestore = FirebaseFirestore.instance;
+  
   //TODO: change base url based on firestore
-  String baseUrl = 'https://0e1c-34-75-250-81.ngrok.io/';
+  String _baseUrl = '';
 
   final Map<String, String> _commonHeaders = {
     'Accept': '*/*',
     'Accept-Encoding': 'gzip, deflate, br',
     'Connection': 'keep-alive',
   };
+  
+  Future<void> _configureBaseUrl() async {
+    await _firestore.collection('baseUrls').doc('default').get().then((snapshot) {
+      final data = snapshot.data() as Map<String, dynamic>;
+      _baseUrl = data['httpsUrl'];
+    });
+  }
 
   Future<PredictionResult> getPredictionResults() async {
-    Uri endpoint = Uri.parse('${baseUrl}predictPosture/true');
+    await _configureBaseUrl();
+    final valueParams = ['true', 'false'];
+
+    Uri endpoint = Uri.parse('$_baseUrl/predictPosture/${valueParams[Random().nextInt(valueParams.length)]}');
 
     try {
       if (kDebugMode) print("Started fetching at: ${DateTime.now()}");
 
-      var response = await http.get(endpoint, headers: _commonHeaders);
+      var response = await http.get(endpoint);
       logEndpoint(endpoint, response.statusCode);
 
       if (kDebugMode) print("Received results at: ${DateTime.now()}");

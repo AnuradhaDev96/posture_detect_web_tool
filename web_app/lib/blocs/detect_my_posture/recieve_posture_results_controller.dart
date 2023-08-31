@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web_app/models/enums/prediction_result.dart';
 
@@ -14,7 +15,7 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
 
   /// This function should be used initially
   Future<void> fetchPredictionResults() async {
-    print("Initial call at ${DateTime.now()}");
+    if (kDebugMode) print("Initial call at ${DateTime.now()}");
     _getPredictionResults();
     _fetchResultsTimer = _defaultTimer;
   }
@@ -33,7 +34,7 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
   }
 
   Timer get _defaultTimer => Timer.periodic(
-        const Duration(seconds: 28),
+        const Duration(seconds: 20),
         (timer) {
           _getPredictionResults();
         },
