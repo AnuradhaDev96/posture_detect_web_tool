@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../blocs/detect_my_posture/recieve_posture_results_controller.dart';
+import '../../blocs/states/posture_result_state.dart';
 import '../../themes/app_colors.dart';
-import '../../utils/assets.dart';
 
 class InitializedCustomScrollView extends StatefulWidget {
   const InitializedCustomScrollView({super.key, required this.cameraController});
@@ -121,68 +121,72 @@ class _InitializedCustomScrollViewState extends State<InitializedCustomScrollVie
             child: BlocBuilder<ReceivePostureResultsController, PostureResultState>(
               bloc: _predictionController,
               builder: (context, state) {
-                // if (state is RecordingVideo) {
-                //   return
-                // }
-
-                return Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 0.43,
-                    height: 230,
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    margin: const EdgeInsets.symmetric(vertical: 30),
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.sizeOf(context).width * 0.15,
-                              child: const Text(
-                                'Bad Posture',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.sizeOf(context).width * 0.2,
-                              child: const Text(
-                                'Please check whether the prediction server is started and running.',
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SvgPicture.asset(
-                          Assets.serverIcon,
-                          width: 116,
-                          height: 116,
-                        )
-                      ],
-                    ),
-                  ),
-                );
+                if (state is BreakTakenState) {
+                  return const SizedBox.shrink();
+                } else {
+                  return statusCard(state);
+                }
               },
             ),
           ),
         )
       ],
+    );
+  }
+
+  Widget statusCard(PostureResultState state) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        width: MediaQuery.sizeOf(context).width * 0.43,
+        height: 230,
+        decoration: BoxDecoration(
+          color: state.backgroundColor,
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        margin: const EdgeInsets.symmetric(vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.15,
+                  child: Text(
+                    state.title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.2,
+                  child: Text(
+                    state.description,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SvgPicture.asset(
+              state.icon,
+              width: 116,
+              height: 116,
+            )
+          ],
+        ),
+      ),
     );
   }
 }
