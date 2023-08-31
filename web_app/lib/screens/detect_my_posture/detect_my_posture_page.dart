@@ -4,7 +4,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../themes/app_colors.dart';
 import '../../themes/app_text_styles.dart';
 import '../../utils/assets.dart';
 import '../widgets/camera_error_widget.dart';
@@ -53,14 +52,13 @@ class _DetectMyPosturePageState extends State<DetectMyPosturePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.indigo2,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 52, right: 30),
-          child: SvgPicture.asset(Assets.leftArrowIcon, width: 29.64, height: 48),
+          padding: const EdgeInsets.only(left: 30, right: 30),
+          child: SvgPicture.asset(Assets.leftArrowIcon, width: 25, height: 35),
         ),
-        leadingWidth: 105,
+        leadingWidth: 80,
         title: const Align(
           alignment: Alignment.centerLeft,
           child: Text(
@@ -69,11 +67,11 @@ class _DetectMyPosturePageState extends State<DetectMyPosturePage> {
           ),
         ),
         titleTextStyle: AppTextStyles.pageHeading,
-        toolbarHeight: 150,
+        toolbarHeight: 100,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(top: 30.0, right: 26.0),
-            child: SvgPicture.asset(Assets.seatIcon, width: 118, height: 118),
+            padding: const EdgeInsets.only(top: 20.0, right: 20.0, bottom: 20.0),
+            child: SvgPicture.asset(Assets.seatIcon, width: 90, height: 90),
           ),
         ],
       ),

@@ -8,7 +8,7 @@ abstract class AppTextStyles {
   static const pageHeading = TextStyle(
     color: AppColors.indigo1,
     fontWeight: FontWeight.bold,
-    fontSize: 60,
+    fontSize: 40,
   );
 
 }
