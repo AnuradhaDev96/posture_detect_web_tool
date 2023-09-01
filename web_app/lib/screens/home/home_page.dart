@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../themes/app_colors.dart';
 import '../../utils/assets.dart';
 import '../detect_my_posture/detect_my_posture_page.dart';
+import '../posture_guide/posture_guide_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -133,7 +134,12 @@ class HomePage extends StatelessWidget {
             child: Align(
               alignment: Alignment.topCenter,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PostureGuidePage(),
+                  ),
+                ),
                 child: Container(
                   width: MediaQuery.sizeOf(context).width * 0.5,
                   // height: 210,

@@ -10,15 +10,8 @@ import '../models/enums/prediction_result.dart';
 
 class PredictPostureService {
   final _firestore = FirebaseFirestore.instance;
-  
-  //TODO: change base url based on firestore
-  String _baseUrl = '';
 
-  final Map<String, String> _commonHeaders = {
-    'Accept': '*/*',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Connection': 'keep-alive',
-  };
+  String _baseUrl = '';
   
   Future<void> _configureBaseUrl() async {
     await _firestore.collection('baseUrls').doc('default').get().then((snapshot) {
@@ -60,6 +53,57 @@ class PredictPostureService {
       logException(endpoint, error);
       return PredictionResult.serverError;
     }
+  }
+
+  Future<PredictionResult> postVideoForPredictionResults(String filePath) async {
+    await _configureBaseUrl();
+    Uri endpoint = Uri.parse('$_baseUrl/uploadVideoToPredict');
+
+    try {
+
+      if (kDebugMode) print("Started fetching at: ${DateTime.now()}");
+
+      var multipartRequest = http.MultipartRequest('POST', endpoint);
+
+      final encodedString = await _networkImageToBase64(filePath);
+
+      multipartRequest.fields.addAll({
+        'video_base64': encodedString,
+      });
+
+      var response = await multipartRequest.send();
+      logEndpoint(endpoint, response.statusCode);
+
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var responseMap = jsonDecode(responseBody);
+        String result = responseMap["data"];
+
+        if (result == "correct") {
+          return PredictionResult.goodPosture;
+        } else {
+          return PredictionResult.badPosture;
+        }
+      } else {
+        return PredictionResult.serverError;
+      }
+
+    } on SocketException catch (exception) {
+      logException(endpoint, exception);
+      return PredictionResult.serverError;
+    } catch (error) {
+      logException(endpoint, error);
+      return PredictionResult.serverError;
+    }
+  }
+
+  Future<String> _networkImageToBase64(String filePath) async {
+    Uri blobPath = Uri.parse(filePath);
+
+    http.Response response = await http.get(blobPath);
+    final bytes = response.bodyBytes;
+    // final body = response.body;
+    return base64Encode(bytes);
   }
 
   void logEndpoint(dynamic endpoint, int statusCode) {

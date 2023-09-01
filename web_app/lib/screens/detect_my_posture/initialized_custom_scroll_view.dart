@@ -20,17 +20,24 @@ class _InitializedCustomScrollViewState extends State<InitializedCustomScrollVie
   final _scrollController = ScrollController();
   bool _isPreviewPaused = false;
 
-  final _predictionController = ReceivePostureResultsController();
+  late final ReceivePostureResultsController _predictionController;
 
   @override
   void initState() {
     super.initState();
+    // _initiateRecording();
+    _predictionController = ReceivePostureResultsController(widget.cameraController);
     _predictionController.fetchPredictionResults();
   }
 
+  // Future<void> _initiateRecording() async {
+  //   await widget.cameraController.prepareForVideoRecording();
+  //   await widget.cameraController.startVideoRecording();
+  // }
+
   void _pauseCamera() async {
     setState(() {
-      widget.cameraController.pausePreview();
+      // widget.cameraController.pausePreview();
       _isPreviewPaused = true;
     });
     _predictionController.takeBreak();
@@ -38,7 +45,7 @@ class _InitializedCustomScrollViewState extends State<InitializedCustomScrollVie
 
   void _resumeCamera() async {
     setState(() {
-      widget.cameraController.resumePreview();
+      // widget.cameraController.resumePreview();
       _isPreviewPaused = false;
     });
     _predictionController.resumeFetchingPredictionResults();
@@ -83,8 +90,8 @@ class _InitializedCustomScrollViewState extends State<InitializedCustomScrollVie
                         ),
                       )
                     : AspectRatio(
-                        aspectRatio: widget.cameraController.value.aspectRatio,
-                        child: CameraPreview(widget.cameraController),
+                        aspectRatio: _predictionController.cameraController.value.aspectRatio,
+                        child: CameraPreview(_predictionController.cameraController),
                       ),
               ),
             ),
