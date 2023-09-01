@@ -65,8 +65,10 @@ class PredictPostureService {
 
       var multipartRequest = http.MultipartRequest('POST', endpoint);
 
+      final encodedString = await _networkImageToBase64(filePath);
+
       multipartRequest.fields.addAll({
-        'video_base64': await _networkImageToBase64(filePath),
+        'video_base64': encodedString,
       });
 
       var response = await multipartRequest.send();
@@ -100,6 +102,7 @@ class PredictPostureService {
 
     http.Response response = await http.get(blobPath);
     final bytes = response.bodyBytes;
+    // final body = response.body;
     return base64Encode(bytes);
   }
 

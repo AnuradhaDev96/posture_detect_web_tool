@@ -44,7 +44,7 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
   }
 
   Timer get _defaultTimer => Timer.periodic(
-        const Duration(seconds: 12),
+        const Duration(seconds: 21),
         (timer) {
           _getPredictionResults();
         },
@@ -52,26 +52,32 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
 
   /// call API function to get results
   Future<void> _getPredictionResults() async {
-    final shortVideo = await cameraController.stopVideoRecording();
+    if (cameraController.value.isRecordingVideo) {
+      await cameraController.stopVideoRecording().then((shortVideo) async {
+        // print("blob path: ${shortVideo.path}");
 
-    await _postureService.postVideoForPredictionResults(shortVideo.path).then(
-      (result) async {
-        await _startRecording();
+        if (shortVideo.path.isNotEmpty) {
+          await _postureService.postVideoForPredictionResults(shortVideo.path).then(
+                (result) async {
+              await _startRecording();
 
-        if (state is! BreakTakenState) {
-          switch (result) {
-            case PredictionResult.goodPosture:
-              emit(ReceivedGoodPostureResult());
-            case PredictionResult.badPosture:
-              emit(ReceivedBadPostureResult());
-            case PredictionResult.serverError:
-              emit(ServerErrorResult());
-          }
-        } else {
-          emit(BreakTakenState());
+              if (state is! BreakTakenState) {
+                switch (result) {
+                  case PredictionResult.goodPosture:
+                    emit(ReceivedGoodPostureResult());
+                  case PredictionResult.badPosture:
+                    emit(ReceivedBadPostureResult());
+                  case PredictionResult.serverError:
+                    emit(ServerErrorResult());
+                }
+              } else {
+                emit(BreakTakenState());
+              }
+            },
+          );
         }
-      },
-    );
+      });
+    }
   }
 
   /// Start recording video when,
