@@ -18,12 +18,15 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
   /// This function should be used initially
   Future<void> fetchPredictionResults() async {
     if (kDebugMode) print("Initial call at ${DateTime.now()}");
-    _getPredictionResults();
+
+    await _startRecording();
+
     _fetchResultsTimer = _defaultTimer;
   }
 
   /// To pause fetching results
-  void takeBreak() {
+  void takeBreak() async {
+    await cameraController.stopVideoRecording();
     cameraController.pausePreview();
     _fetchResultsTimer?.cancel();
     emit(BreakTakenState());
@@ -32,13 +35,16 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
   /// Resume fetching results
   Future<void> resumeFetchingPredictionResults() async {
     cameraController.resumePreview();
+
+    await _startRecording();
+
     emit(RecordingVideo());
-    _getPredictionResults();
+
     _fetchResultsTimer = _defaultTimer;
   }
 
   Timer get _defaultTimer => Timer.periodic(
-        const Duration(seconds: 20),
+        const Duration(seconds: 12),
         (timer) {
           _getPredictionResults();
         },
@@ -46,8 +52,12 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
 
   /// call API function to get results
   Future<void> _getPredictionResults() async {
-    await _postureService.getPredictionResults().then(
-      (result) {
+    final shortVideo = await cameraController.stopVideoRecording();
+
+    await _postureService.postVideoForPredictionResults(shortVideo.path).then(
+      (result) async {
+        await _startRecording();
+
         if (state is! BreakTakenState) {
           switch (result) {
             case PredictionResult.goodPosture:
@@ -62,5 +72,14 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
         }
       },
     );
+  }
+
+  /// Start recording video when,
+  /// 1. Page initiates
+  /// 3. When resumes camera after break
+  /// 2. After API results received
+  Future<void> _startRecording() async {
+    await cameraController.prepareForVideoRecording();
+    await cameraController.startVideoRecording();
   }
 }
