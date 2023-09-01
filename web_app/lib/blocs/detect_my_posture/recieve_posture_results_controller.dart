@@ -58,7 +58,7 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
   }
 
   Timer get _defaultTimer => Timer.periodic(
-        const Duration(seconds: 21),
+        const Duration(seconds: 29),
         (timer) {
           _getPredictionResults();
         },
@@ -68,6 +68,7 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
   Future<void> _getPredictionResults() async {
     if (cameraController.value.isRecordingVideo) {
       await cameraController.stopVideoRecording().then((shortVideo) async {
+        // print("==Stopped recording at: ${DateTime.now()}");
         // print("blob path: ${shortVideo.path}");
 
         if (shortVideo.path.isNotEmpty) {
@@ -99,6 +100,7 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
   /// 3. When resumes camera after break
   /// 2. After API results received
   Future<void> _startRecording() async {
+    // print("==Started recording at: ${DateTime.now()}");
     await cameraController.prepareForVideoRecording();
     await cameraController.startVideoRecording();
   }
