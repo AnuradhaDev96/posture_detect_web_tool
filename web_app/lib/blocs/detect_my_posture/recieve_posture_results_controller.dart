@@ -24,9 +24,23 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
     _fetchResultsTimer = _defaultTimer;
   }
 
+  dispose() async {
+    if (cameraController.value.isRecordingVideo) {
+      await cameraController.stopVideoRecording();
+    }
+
+    if (!cameraController.value.isPreviewPaused) {
+      await cameraController.pausePreview();
+    }
+
+    _fetchResultsTimer?.cancel();
+  }
+
   /// To pause fetching results
   void takeBreak() async {
-    await cameraController.stopVideoRecording();
+    if (cameraController.value.isRecordingVideo) {
+      await cameraController.stopVideoRecording();
+    }
     cameraController.pausePreview();
     _fetchResultsTimer?.cancel();
     emit(BreakTakenState());

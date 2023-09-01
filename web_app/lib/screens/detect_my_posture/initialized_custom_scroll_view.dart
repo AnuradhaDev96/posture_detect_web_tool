@@ -30,10 +30,11 @@ class _InitializedCustomScrollViewState extends State<InitializedCustomScrollVie
     _predictionController.fetchPredictionResults();
   }
 
-  // Future<void> _initiateRecording() async {
-  //   await widget.cameraController.prepareForVideoRecording();
-  //   await widget.cameraController.startVideoRecording();
-  // }
+  @override
+  void dispose() async {
+    super.dispose();
+    await _predictionController.dispose();
+  }
 
   void _pauseCamera() async {
     setState(() {
@@ -66,33 +67,36 @@ class _InitializedCustomScrollViewState extends State<InitializedCustomScrollVie
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Center(
-                child: _isPreviewPaused
-                    ? GestureDetector(
-                        onTap: () => _resumeCamera(),
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            width: 200,
-                            height: 50,
-                            margin: const EdgeInsets.only(top: 12),
-                            decoration: BoxDecoration(
-                              color: AppColors.indigo1,
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Resume',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Center(
+                  child: _isPreviewPaused
+                      ? GestureDetector(
+                          onTap: () => _resumeCamera(),
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              width: 200,
+                              height: 50,
+                              margin: const EdgeInsets.only(top: 12),
+                              decoration: BoxDecoration(
+                                color: AppColors.indigo1,
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Resume',
+                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+                                ),
                               ),
                             ),
                           ),
+                        )
+                      : AspectRatio(
+                          aspectRatio: _predictionController.cameraController.value.aspectRatio,
+                          child: CameraPreview(_predictionController.cameraController),
                         ),
-                      )
-                    : AspectRatio(
-                        aspectRatio: _predictionController.cameraController.value.aspectRatio,
-                        child: CameraPreview(_predictionController.cameraController),
-                      ),
+                ),
               ),
             ),
           ),
