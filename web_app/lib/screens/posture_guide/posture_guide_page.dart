@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../themes/app_colors.dart';
 import '../../themes/app_text_styles.dart';
 import '../../utils/assets.dart';
+import '../read_more/read_more_page.dart';
 
 class PostureGuidePage extends StatelessWidget {
   const PostureGuidePage({super.key});
@@ -41,18 +43,37 @@ class PostureGuidePage extends StatelessWidget {
           SliverToBoxAdapter(
             child: Align(
               alignment: Alignment.topCenter,
-              child: Container(
-                width: MediaQuery.sizeOf(context).width * 0.5,
-                decoration: BoxDecoration(
-                  color: AppColors.indigo1,
-                  borderRadius: BorderRadius.circular(16.0),
+              child: GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ReadMorePage(
+                      image: Assets.guide1png,
+                      description:
+                          'On the cutting table, you can see that there is enough space for as many people as possible and also use common fabrics sparingly. It is recommended to mention the malfunctioning of the machines to the teacher immediately, so that a repairman can be called to the place as soon as possible.\n\nIn general, of course, you should be friendly and helpful to others and participate in your own part in daily tasks: turn on the electricity in the morning and turn it off in the afternoon, add water to the ironing station if necessary, etc.',
+                    ),
+                  ),
                 ),
-                margin: const EdgeInsets.only(top: 20.0),
-                padding: const EdgeInsets.only(left: 25.0, top: 20, bottom: 20),
-                child: Center(
-                  child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width * 0.4,
-                    child: Image.asset(Assets.guide1png, fit: BoxFit.fitHeight),
+                child: Container(
+                  width: MediaQuery.sizeOf(context).width * 0.65,
+                  decoration: BoxDecoration(
+                    color: AppColors.indigo3,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  margin: const EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.only(left: 25.0, top: 20, bottom: 20, right: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: SizedBox(
+                          width: MediaQuery.sizeOf(context).width * 0.4,
+                          child: Image.asset(Assets.guide1png, fit: BoxFit.fitHeight),
+                        ),
+                      ),
+                      SvgPicture.asset(Assets.readMoreIcon, width: 60, height: 60),
+                    ],
                   ),
                 ),
               ),
@@ -61,18 +82,28 @@ class PostureGuidePage extends StatelessWidget {
           SliverToBoxAdapter(
             child: Align(
               alignment: Alignment.topCenter,
-              child: Container(
-                width: MediaQuery.sizeOf(context).width * 0.5,
-                decoration: BoxDecoration(
-                  color: AppColors.indigo1,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                margin: const EdgeInsets.only(top: 20.0),
-                padding: const EdgeInsets.only(left: 25.0, top: 20, bottom: 20),
-                child: Center(
-                  child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width * 0.4,
-                    child: Image.asset(Assets.guide2png, fit: BoxFit.fitHeight),
+              child: GestureDetector(
+                onTap: () => _launchBlogSite('https://www.linkedin.com/pulse/ergo-sew-chair-why-ed-dominguez/'),
+                child: Container(
+                  width: MediaQuery.sizeOf(context).width * 0.65,
+                  decoration: BoxDecoration(
+                    color: AppColors.indigo3,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  margin: const EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.only(left: 25.0, top: 20, bottom: 20, right: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: SizedBox(
+                          width: MediaQuery.sizeOf(context).width * 0.4,
+                          child: Image.asset(Assets.guide2png, fit: BoxFit.fitHeight),
+                        ),
+                      ),
+                      SvgPicture.asset(Assets.readMoreIcon, width: 60, height: 60),
+                    ],
                   ),
                 ),
               ),
@@ -81,18 +112,28 @@ class PostureGuidePage extends StatelessWidget {
           SliverToBoxAdapter(
             child: Align(
               alignment: Alignment.topCenter,
-              child: Container(
-                width: MediaQuery.sizeOf(context).width * 0.5,
-                decoration: BoxDecoration(
-                  color: AppColors.indigo1,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                margin: const EdgeInsets.only(top: 20.0, bottom: 30.0),
-                padding: const EdgeInsets.only(left: 25.0, top: 20, bottom: 20),
-                child: Center(
-                  child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width * 0.4,
-                    child: Image.asset(Assets.guide3png, fit: BoxFit.fitHeight),
+              child: GestureDetector(
+                onTap: () => _launchBlogSite('https://thequiltshow.com/quiltipedia/what-are-ergonomics-for-quilters/'),
+                child: Container(
+                  width: MediaQuery.sizeOf(context).width * 0.65,
+                  decoration: BoxDecoration(
+                    color: AppColors.indigo3,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  margin: const EdgeInsets.only(top: 20.0, bottom: 30.0),
+                  padding: const EdgeInsets.only(left: 25.0, top: 20, bottom: 20, right: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: SizedBox(
+                          width: MediaQuery.sizeOf(context).width * 0.4,
+                          child: Image.asset(Assets.guide3png, fit: BoxFit.fitHeight),
+                        ),
+                      ),
+                      SvgPicture.asset(Assets.readMoreIcon, width: 60, height: 60),
+                    ],
                   ),
                 ),
               ),
@@ -101,5 +142,11 @@ class PostureGuidePage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _launchBlogSite(String urlString) async {
+    if (await canLaunchUrlString(urlString)) {
+      await launchUrlString(urlString, webOnlyWindowName: '_blank');
+    }
   }
 }

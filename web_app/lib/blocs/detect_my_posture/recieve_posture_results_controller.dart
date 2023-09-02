@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web_app/models/enums/prediction_result.dart';
 
 import '../../services/predict_posture_service.dart';
+import '../../services/sound_effect_service.dart';
 import '../states/posture_result_state.dart';
 
 class ReceivePostureResultsController extends Cubit<PostureResultState> {
@@ -80,10 +81,14 @@ class ReceivePostureResultsController extends Cubit<PostureResultState> {
                 switch (result) {
                   case PredictionResult.goodPosture:
                     emit(ReceivedGoodPostureResult());
+                    break;
                   case PredictionResult.badPosture:
+                    SoundEffectsService().playAssetSoundEffect('audio/bad_posture_alert.wav');
                     emit(ReceivedBadPostureResult());
+                    break;
                   case PredictionResult.serverError:
                     emit(ServerErrorResult());
+                    break;
                 }
               } else {
                 emit(BreakTakenState());
