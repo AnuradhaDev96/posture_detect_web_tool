@@ -55,18 +55,25 @@ class PostureGuidePage extends StatelessWidget {
                   ),
                 ),
                 child: Container(
-                  width: MediaQuery.sizeOf(context).width * 0.5,
+                  width: MediaQuery.sizeOf(context).width * 0.65,
                   decoration: BoxDecoration(
-                    color: AppColors.indigo1,
+                    color: AppColors.indigo3,
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   margin: const EdgeInsets.only(top: 20.0),
-                  padding: const EdgeInsets.only(left: 25.0, top: 20, bottom: 20),
-                  child: Center(
-                    child: SizedBox(
-                      width: MediaQuery.sizeOf(context).width * 0.4,
-                      child: Image.asset(Assets.guide1png, fit: BoxFit.fitHeight),
-                    ),
+                  padding: const EdgeInsets.only(left: 25.0, top: 20, bottom: 20, right: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: SizedBox(
+                          width: MediaQuery.sizeOf(context).width * 0.4,
+                          child: Image.asset(Assets.guide1png, fit: BoxFit.fitHeight),
+                        ),
+                      ),
+                      SvgPicture.asset(Assets.readMoreIcon, width: 60, height: 60),
+                    ],
                   ),
                 ),
               ),
@@ -78,18 +85,25 @@ class PostureGuidePage extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => _launchBlogSite('https://www.linkedin.com/pulse/ergo-sew-chair-why-ed-dominguez/'),
                 child: Container(
-                  width: MediaQuery.sizeOf(context).width * 0.5,
+                  width: MediaQuery.sizeOf(context).width * 0.65,
                   decoration: BoxDecoration(
-                    color: AppColors.indigo1,
+                    color: AppColors.indigo3,
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   margin: const EdgeInsets.only(top: 20.0),
-                  padding: const EdgeInsets.only(left: 25.0, top: 20, bottom: 20),
-                  child: Center(
-                    child: SizedBox(
-                      width: MediaQuery.sizeOf(context).width * 0.4,
-                      child: Image.asset(Assets.guide2png, fit: BoxFit.fitHeight),
-                    ),
+                  padding: const EdgeInsets.only(left: 25.0, top: 20, bottom: 20, right: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: SizedBox(
+                          width: MediaQuery.sizeOf(context).width * 0.4,
+                          child: Image.asset(Assets.guide2png, fit: BoxFit.fitHeight),
+                        ),
+                      ),
+                      SvgPicture.asset(Assets.readMoreIcon, width: 60, height: 60),
+                    ],
                   ),
                 ),
               ),
@@ -101,18 +115,25 @@ class PostureGuidePage extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => _launchBlogSite('https://thequiltshow.com/quiltipedia/what-are-ergonomics-for-quilters/'),
                 child: Container(
-                  width: MediaQuery.sizeOf(context).width * 0.5,
+                  width: MediaQuery.sizeOf(context).width * 0.65,
                   decoration: BoxDecoration(
-                    color: AppColors.indigo1,
+                    color: AppColors.indigo3,
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   margin: const EdgeInsets.only(top: 20.0, bottom: 30.0),
-                  padding: const EdgeInsets.only(left: 25.0, top: 20, bottom: 20),
-                  child: Center(
-                    child: SizedBox(
-                      width: MediaQuery.sizeOf(context).width * 0.4,
-                      child: Image.asset(Assets.guide3png, fit: BoxFit.fitHeight),
-                    ),
+                  padding: const EdgeInsets.only(left: 25.0, top: 20, bottom: 20, right: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: SizedBox(
+                          width: MediaQuery.sizeOf(context).width * 0.4,
+                          child: Image.asset(Assets.guide3png, fit: BoxFit.fitHeight),
+                        ),
+                      ),
+                      SvgPicture.asset(Assets.readMoreIcon, width: 60, height: 60),
+                    ],
                   ),
                 ),
               ),
